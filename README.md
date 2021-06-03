@@ -203,11 +203,10 @@
 
 ### 신규 기능 추가
 
-![new](https://user-images.githubusercontent.com/81946702/120668980-facad700-c4c9-11eb-8916-4af6238bf5b7.png)
+![new2](https://user-images.githubusercontent.com/81946702/120690251-ed204c00-c4df-11eb-88f9-9ea77d208467.png)
 
 1. 호스트가 Room 삭제 시 예약은 취소되는 기능 (Sync : Req/Res)
-2. 호스트가 Room 신규 등록 시 예약 변경 기능 (Pub/Sub)
-3. 호스트가 Room 신규 등록 시 Alarm (Pub/Sub)
+2. 호스트가 Room 신규 등록 시 Alarm (Pub/Sub)
 
 
 
