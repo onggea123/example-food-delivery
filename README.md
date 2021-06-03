@@ -300,11 +300,14 @@ kubectl apply -f siege.yaml
 
 현황
 
-![image](https://user-images.githubusercontent.com/45786659/118969619-3b91fe80-b9a8-11eb-9594-eb9fb4efde49.png)
+kubectl get ns
+kubectl describe ns myhotel
 
-![image](https://user-images.githubusercontent.com/45786659/118969712-595f6380-b9a8-11eb-947a-ca627e5e15e6.png)
+![캡처1](https://user-images.githubusercontent.com/81946702/120670612-8f820480-c4cb-11eb-8161-dbc0e54474c7.PNG)
 
-![image](https://user-images.githubusercontent.com/45786659/118971988-04711c80-b9ab-11eb-800b-be935df5235d.png)
+kubectl get all -n myhotel
+
+![캡처2](https://user-images.githubusercontent.com/81946702/120670625-927cf500-c4cb-11eb-9d74-8efe7d583dc6.PNG)
 
 
 
