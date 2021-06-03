@@ -201,6 +201,16 @@
         - 나머지 모든 inter-microservice 트랜잭션: 예약상태, 예약취소 등 모든 이벤트에 대해 알림 처리하는 등, 데이터 일관성의 시점이 크리티컬하지 않은 모든 경우가 대부분이라 판단, Eventual Consistency 를 기본으로 채택함.
 
 
+### 신규 기능 추가
+
+![new](https://user-images.githubusercontent.com/81946702/120668980-facad700-c4c9-11eb-8916-4af6238bf5b7.png)
+
+1. 호스트가 Room 삭제 시 예약은 취소되는 기능 (Sync : Req/Res)
+2. 호스트가 Room 신규 등록 시 예약 변경 기능 (Pub/Sub)
+3. 호스트가 Room 신규 등록 시 Alarm (Pub/Sub)
+
+
+
 ## 헥사고날 아키텍처 다이어그램 도출
     
 ![image](https://user-images.githubusercontent.com/45786659/118924241-c4dd0d00-b977-11eb-94b2-c49d3b4e3de5.png)
@@ -220,7 +230,7 @@
 eksctl create cluster --name example-hotel-booking --version 1.16 --nodegroup-name standard-workers --node-type t3.medium --nodes 3 --nodes-min 1 --nodes-max 4
 
 # eks cluster 설정
-aws eks --region ap-northeast-1 update-kubeconfig --name example-hotel-booking
+aws eks --region ap-northeast-2 update-kubeconfig --name example-hotel-booking
 kubectl config current-context
 
 # metric server 설치
@@ -245,10 +255,36 @@ helm install my-kafka bitnami/kafka --namespace kafka
 kubectl create namespace myhotel
 
 # myhotel image build & push
-cd myhotel/book
+cd book
 mvn package
-docker build -t 740569282574.dkr.ecr.ap-northeast-1.amazonaws.com/book:latest .
-docker push 740569282574.dkr.ecr.ap-northeast-1.amazonaws.com/book:latest
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-book:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-book:latest
+
+cd alarm
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-alarm:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-alarm:latest
+
+cd gateway
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-gateway:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-gateway:latest
+
+cd pay
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-pay:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-pay:latest
+
+cd mypage
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-mypage:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-mypage:latest
+
+cd room
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-room:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-room:latest
+
 
 # myhotel deploy
 cd myhotel/yaml
