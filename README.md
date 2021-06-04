@@ -1,5 +1,8 @@
 <img src="https://user-images.githubusercontent.com/43338817/118908353-3eff9880-b95c-11eb-82f5-de2868e3ae4e.png" alt="" data-canonical-src="https://user-images.githubusercontent.com/43338817/118908353-3eff9880-b95c-11eb-82f5-de2868e3ae4e.png" width="250" height="250" /> <img src="https://user-images.githubusercontent.com/43338817/118910199-0c0ad400-b95f-11eb-8165-c469394fa8ab.png" alt="" data-canonical-src="https://user-images.githubusercontent.com/43338817/118910199-0c0ad400-b95f-11eb-8165-c469394fa8ab.png" width="250" height="250" />
 
+![image](https://user-images.githubusercontent.com/81946702/120748611-0657e580-c53e-11eb-901c-7a3c781c001d.png)
+
+
 # 예제 -  호텔예약서비스
 
 호텔 음식 예약 서비스 
@@ -433,10 +436,9 @@ http http://book:8080/books/1
 
 
 ## 폴리글랏 퍼시스턴스
-
-
-
 ## 폴리글랏 프로그래밍
+
+## 동기식 호출과 Fallback 처리
 
 - 결제 서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 
 
@@ -649,6 +651,9 @@ http http://alarm:8080/notifications # 알림이력조회
 ![image](https://user-images.githubusercontent.com/81946702/120748028-086d7480-c53d-11eb-9b57-5d1cf252641a.png)
 
 
+
+--------------------------------------
+
 # 운영
 
 ## CI/CD 설정
@@ -696,10 +701,6 @@ spec:
       baseEjectionTime: 10s
       maxEjectionPercent: 100
 ```
-
-- DestinationRule 적용되어 서킷 브레이킹 동작 확인 (Kiali Graph)
-
-![image](https://user-images.githubusercontent.com/43338817/119082429-0bdf0700-ba39-11eb-8f29-b0f934c9c4b5.png)
 
 - 다시 부하 발생하여 DestinationRule 적용 제거하여 정상 처리 확인
 ```
@@ -1066,6 +1067,3 @@ book-6f6db947f7-kqggb   2/2     Running   1          18m   192.168.0.47   ip-192
 
 ## CQRS
 
-- 게스트와 호스트가 자주 예약관리에서 확인할 수 있는 상태를 마이페이지(프론트엔드)에서 확인할 수 있어야 한다:
-
-<img width="1440" alt="cqrs" src="https://user-images.githubusercontent.com/45786659/119085956-a9d5d000-ba3f-11eb-80a6-7c3210c02823.png">
