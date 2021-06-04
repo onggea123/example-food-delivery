@@ -498,10 +498,15 @@ $ kubectl delete -f pay.yaml
 ```
 
 # 예약처리 (siege 사용)
+
+```
+
 http POST http://book:8080/books roomId=2 price=1500 startDate=20210505 endDate=20210508  #Fail
 http POST http://book:8080/books roomId=3 price=2000 startDate=20210505 endDate=20210508  #Fail
+
 ```
 ![image](https://user-images.githubusercontent.com/81946702/120747262-ae1fe400-c53b-11eb-8fa6-4e36d6050ab4.png)
+
 ```
 # 결제서비스 재기동
 $ kubectl apply -f pay.yaml
@@ -510,11 +515,11 @@ $ kubectl apply -f pay.yaml
 http POST http://book:8080/books roomId=2 price=1500 startDate=20210505 endDate=20210508  #Success
 http POST http://book:8080/books roomId=3 price=2000 startDate=20210505 endDate=20210508  #Success
 ```
+
 ![image](https://user-images.githubusercontent.com/81946702/120747478-05be4f80-c53c-11eb-80b8-087c5eec5bfc.png)
 
 
 - 또한 과도한 요청시에 서비스 장애가 도미노 처럼 벌어질 수 있다. (서킷브레이커, 폴백 처리는 운영단계에서 설명한다.)
-
 
 
 
@@ -600,7 +605,7 @@ public class PolicyHandler{
 
 ```
 
-알림 시스템은 예약/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 알림 시스템이 유지보수로 인해 잠시 내려간 상태라도 예약을 받는데 문제가 없다:
+- 알림 시스템은 예약/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 알림 시스템이 유지보수로 인해 잠시 내려간 상태라도 예약을 받는데 문제가 없다:
 ```
 # 알림 서비스를 잠시 내려놓음
 cd yaml
@@ -629,7 +634,7 @@ kubectl apply -f alarm.yaml
 http http://alarm:8080/notifications # 알림이력조회
 ```
 ![image](https://user-images.githubusercontent.com/81946702/120747710-7a918980-c53c-11eb-84e5-f9c12350300d.png)
-```
+
 
 # Correlation 테스트
 
