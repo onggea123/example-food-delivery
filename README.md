@@ -737,32 +737,7 @@ kubectl get deploy book -w -n myhotel
 
 ![image](https://user-images.githubusercontent.com/81946702/120750021-9008b280-c540-11eb-8ea8-cc10581e7a21.png)
 
-```
-NAME   READY   UP-TO-DATE   AVAILABLE   AGE
-book   1/1     1            1           66s
-book   1/4     1            1           2m9s
-book   1/4     1            1           2m9s
-book   1/4     1            1           2m9s
-book   1/4     4            1           2m9s
-book   1/8     4            1           2m24s
-book   1/8     4            1           2m24s
-book   1/8     4            1           2m24s
-book   1/8     8            1           2m24s
-book   1/10    8            1           2m40s
-book   1/10    8            1           2m40s
-book   1/10    8            1           2m40s
-book   1/10    10           1           2m40s
-book   2/10    10           2           3m21s
-book   3/10    10           3           3m26s
-book   4/10    10           4           3m35s
-book   5/10    10           5           3m39s
-book   6/10    10           6           3m41s
-book   7/10    10           7           3m42s
-book   8/10    10           8           3m43s
-book   9/10    10           9           3m54s
-book   10/10   10           10          3m55s
-:
-```
+
 - siege 의 로그를 보아도 전체적인 성공률이 높아진 것을 확인 할 수 있다. 
 ```
 Transactions:                   9090 hits
