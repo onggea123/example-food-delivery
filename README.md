@@ -486,10 +486,6 @@ public class Book {
 }
 ```
 
-- 동기식 호출로 연결되어 있는 예약(book)->결제(pay) 간의 연결 상황을 Kiali Graph로 확인한 결과 (siege 이용하여 book POST)
-
-![image](https://user-images.githubusercontent.com/43338817/119081473-fec11880-ba36-11eb-83fe-ef94952faef1.png)
-
 - 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, 결제 시스템이 장애가 나면 주문도 못받는다는 것을 확인:
 
 
@@ -498,26 +494,21 @@ public class Book {
 cd yaml
 $ kubectl delete -f pay.yaml
 ```
-![image](https://user-images.githubusercontent.com/45786659/119074505-252c8700-ba2a-11eb-89cd-8151b2b757e4.png)
-```
+
 # 예약처리 (siege 사용)
 http POST http://book:8080/books roomId=2 price=1500 startDate=20210505 endDate=20210508  #Fail
 http POST http://book:8080/books roomId=3 price=2000 startDate=20210505 endDate=20210508  #Fail
 ```
-![image](https://user-images.githubusercontent.com/45786659/119074532-2f4e8580-ba2a-11eb-81dd-1b0b4c058b18.png)
-
+![image](https://user-images.githubusercontent.com/81946702/120747262-ae1fe400-c53b-11eb-8fa6-4e36d6050ab4.png)
 ```
 # 결제서비스 재기동
 $ kubectl apply -f pay.yaml
-```
-![image](https://user-images.githubusercontent.com/45786659/119074868-c4ea1500-ba2a-11eb-8ae4-7b4c04945b43.png)
-```
+
 # 예약처리 (siege 사용)
 http POST http://book:8080/books roomId=2 price=1500 startDate=20210505 endDate=20210508  #Success
 http POST http://book:8080/books roomId=3 price=2000 startDate=20210505 endDate=20210508  #Success
 ```
-![image](https://user-images.githubusercontent.com/45786659/119074931-e4813d80-ba2a-11eb-9a42-623e8513ddb1.png)
-
+![image](https://user-images.githubusercontent.com/81946702/120747478-05be4f80-c53c-11eb-80b8-087c5eec5bfc.png)
 
 
 - 또한 과도한 요청시에 서비스 장애가 도미노 처럼 벌어질 수 있다. (서킷브레이커, 폴백 처리는 운영단계에서 설명한다.)
@@ -612,24 +603,17 @@ public class PolicyHandler{
 # 알림 서비스를 잠시 내려놓음
 cd yaml
 kubectl delete -f alarm.yaml
-```
 
-![image](https://user-images.githubusercontent.com/45786659/119075963-aedd5400-ba2c-11eb-950b-342bdb58be3d.png)
-
-```
 # 예약처리 (siege 사용)
 http POST http://book:8080/books roomId=2 price=1500 startDate=20210505 endDate=20210508	#Success
 http POST http://book:8080/books roomId=3 price=2000 startDate=20210505 endDate=20210508	#Success
 ```
-
-![image](https://user-images.githubusercontent.com/45786659/119076006-c74d6e80-ba2c-11eb-9d70-3a08a5bb3ec0.png)
-
 ```
 # 알림이력 확인 (siege 사용)
 http http://alarm:8080/notifications # 알림이력조회 불가
 ```
 
-![image](https://user-images.githubusercontent.com/45786659/119076052-daf8d500-ba2c-11eb-81d3-e8a1ddebe287.png)
+![image](https://user-images.githubusercontent.com/81946702/120747605-4322dd00-c53c-11eb-8210-dfeaae3321b1.png)
 
 ```
 # 알림 서비스 기동
@@ -642,9 +626,10 @@ kubectl apply -f alarm.yaml
 # 알림이력 확인 (siege 사용)
 http http://alarm:8080/notifications # 알림이력조회
 ```
-![image](https://user-images.githubusercontent.com/45786659/119076408-7722dc00-ba2d-11eb-9a01-766f4dd6f9ca.png)
+![image](https://user-images.githubusercontent.com/81946702/120747710-7a918980-c53c-11eb-84e5-f9c12350300d.png)
+```
 
-## Correlation 테스트
+# Correlation 테스트
 
 서비스를 이용해 만들어진 각 이벤트 건은 Correlation-key 연결을 통해 식별이 가능하다.
 
@@ -652,15 +637,17 @@ http http://alarm:8080/notifications # 알림이력조회
 
 결제(pay) 이벤트 건 확인을 위하여 GET 수행
 
-<img width="1440" alt="스크린샷 2021-05-21 오후 4 56 23" src="https://user-images.githubusercontent.com/43338817/119104024-c2051980-ba56-11eb-9dc5-b49c410ad5f3.png">
+![image](https://user-images.githubusercontent.com/81946702/120747902-d52ae580-c53c-11eb-9abd-cb170c3f4025.png)
 
-위 결제(pay) 이벤트 건과 동일한 식별 키를 갖는 7번 예약(book) 이벤트 건 DELETE 수행
+위 결제(pay) 이벤트 건과 동일한 식별 키를 갖는 예약(book) 이벤트 건 DELETE 수행
 
-<img width="1440" alt="스크린샷 2021-05-21 오후 4 56 58" src="https://user-images.githubusercontent.com/43338817/119103981-b6195780-ba56-11eb-8eae-81bb47dc1b09.png">
+![image](https://user-images.githubusercontent.com/81946702/120748235-69954800-c53d-11eb-9a0b-eedb99e51fad.png)
 
-결제(pay) 이벤트 건을 GET 명령어를 통해 조회한 결과 예약(book)에서 삭제한 7번 키를 갖는 결제(pay) 이벤트 또한 삭제된 것을 확
 
-<img width="1440" alt="스크린샷 2021-05-21 오후 4 57 10" src="https://user-images.githubusercontent.com/43338817/119104058-c92c2780-ba56-11eb-83bc-9cc1baff8157.png">
+결제(pay) 이벤트 건을 GET 명령어를 통해 조회한 결과 예약(book)에서 삭제한 17610번 키를 갖는 결제(pay) 이벤트 또한 삭제된 것을 확
+
+![image](https://user-images.githubusercontent.com/81946702/120748028-086d7480-c53d-11eb-9b57-5d1cf252641a.png)
+
 
 # 운영
 
