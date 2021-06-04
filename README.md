@@ -753,6 +753,30 @@ Failed transactions:               2
 Longest transaction:           34.12
 Shortest transaction:           0.01
 ```
+## ConfigMap 사용
+
+시스템별로 또는 운영중에 동적으로 변경 가능성이 있는 설정들을 ConfigMap을 사용하여 관리합니다.
+
+* configmap.yaml
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myhotel-config
+  namespace: myhotel
+data:
+  api.url.payment: http://pay:8080
+  alarm.prefix: Hello
+```
+* book.yaml (configmap 사용)
+
+![image](https://user-images.githubusercontent.com/81946702/120755081-7703ff80-c548-11eb-9e57-cac798859144.png)
+
+
+* kubectl describe pod/book-79ccbdd965-v9cds -n myhotel
+
+![image](https://user-images.githubusercontent.com/81946702/120755247-adda1580-c548-11eb-82f6-9a5ecb1d4a72.png)
+
 
 
 ## 무정지 재배포
@@ -811,32 +835,6 @@ kubectl apply -f room.yaml
 ![image](https://user-images.githubusercontent.com/81946702/119099653-16f26100-ba52-11eb-82da-f04219eabd38.png)
 
 Availability 100%인 것 확인
-
-
-
-## ConfigMap 사용
-
-시스템별로 또는 운영중에 동적으로 변경 가능성이 있는 설정들을 ConfigMap을 사용하여 관리합니다.
-
-* configmap.yaml
-```
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: myhotel-config
-  namespace: myhotel
-data:
-  api.url.payment: http://pay:8080
-  alarm.prefix: Hello
-```
-* book.yaml (configmap 사용)
-
-![image](https://user-images.githubusercontent.com/81946702/120755081-7703ff80-c548-11eb-9e57-cac798859144.png)
-
-
-* kubectl describe pod/book-79ccbdd965-v9cds -n myhotel
-
-![image](https://user-images.githubusercontent.com/81946702/120755247-adda1580-c548-11eb-82f6-9a5ecb1d4a72.png)
 
 
 ## Self-healing (Liveness Probe)
