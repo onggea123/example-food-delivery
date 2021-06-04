@@ -2,6 +2,8 @@
 
 # 예제 -  호텔예약서비스
 
+호텔 음식 예약 서비스 
+
 - 체크포인트 : https://workflowy.com/s/assessment-check-po/T5YrzcMewfo4J6LW
 
 
@@ -29,20 +31,15 @@
 
 # 서비스 시나리오
 
-호텔 예약 서비스 따라하기
+호텔 음식 예약 서비스 따라하기
 
 기능적 요구사항
-1. 호스트가 룸을 등록한다.
-1. 호스트가 룸을 삭제한다.
-3. 게스트가 룸을 검색한다.
-4. 게스트가 룸을 선택하여 사용 예약한다.
-5. 게스트가 결제한다. (Sync, 결제서비스)
-6. 결제가 완료되면, 결제 & 예약 내용을 게스트에게 알림을 전송한다. (Async, 알림서비스)
-7. 예약 내역을 호스트에게 전달한다.
-8. 게스트는 본인의 예약 내용 및 상태를 조회한다.
-9. 게스트는 본인의 예약을 취소할 수 있다.
-12. 예약이 취소되면, 결제를 취소한다. (Async, 결제서비스)
-13. 결제가 취소되면, 결제 취소 내용을 게스트에게 알림을 전송한다. (Async, 알림서비스)
+
+- 게스트가 음식을 선택하여 사용 예약한다.
+- 게스트가 결제한다. (Sync, 결제서비스)
+- 결제가 완료되면, 결제 & 예약 내용을 게스트에게 알림을 전송한다. (Async, 알림서비스)
+- 예약 내역을 호스트에게 전달한다.
+
 
 
 비기능적 요구사항
@@ -199,14 +196,6 @@
         - 룸 예약시 결제처리: 결제가 완료되지 않은 예약은 절대 받지 않는다에 따라, ACID 트랜잭션 적용. 예약 완료시 결제처리에 대해서는 Request-Response 방식 처리
         - 예약 완료시 알림 처리: 예약에서 알림 마이크로서비스로 예약 완료 내용이 전달되는 과정에 있어서 알림 마이크로서비스가 별도의 배포주기를 가지기 때문에 Eventual Consistency 방식으로 트랜잭션 처리함.
         - 나머지 모든 inter-microservice 트랜잭션: 예약상태, 예약취소 등 모든 이벤트에 대해 알림 처리하는 등, 데이터 일관성의 시점이 크리티컬하지 않은 모든 경우가 대부분이라 판단, Eventual Consistency 를 기본으로 채택함.
-
-
-### 신규 기능 추가
-
-![new2](https://user-images.githubusercontent.com/81946702/120690251-ed204c00-c4df-11eb-88f9-9ea77d208467.png)
-
-1. 호스트가 Room 삭제 시 예약은 취소되는 기능 (Sync : Req/Res)
-2. 호스트가 Room 신규 등록 시 Alarm (Pub/Sub)
 
 
 
@@ -449,74 +438,77 @@ http http://book:8080/books/1
 
 ## 폴리글랏 프로그래밍
 
-
-
-## 동기식 호출 과 Fallback 처리
-
-분석단계에서의 조건 중 하나로 룸삭제(room) > 예약(book) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다. 
-
 - 결제 서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 
 
 ```
-# (Room) BookService.java 
+# (book) PaymentService.java 
 
-@FeignClient(name="book", url="http://book:8080")
-public interface BookService {
+@FeignClient(name="pay", url="http://pay:8080")
+public interface PaymentService {
 
-    @RequestMapping(method= RequestMethod.GET, path="/books")
-    public void bookCancel(@RequestBody Book book);
-
-	public void Book(Book book);
+    @RequestMapping(method= RequestMethod.GET, path="/payments")
+    public void pay(@RequestBody Payment payment);
 
 }
 ```
 
-- 룸 삭제 후 (@PostRemove) 결제를 요청하도록 처리
+- 예약을 받은 직후(@PostPersist) 결제를 요청하도록 처리
 ```
-   @PostRemove
-    public void onPostRemove(){
+@Entity
+@Table(name="Book_table")
+public class Book {
+    
+    ...
 
-        intensiveteam.external.Book book = new intensiveteam.external.Book();
-        book.setId(id);
+    @PostPersist
+    public void onPostPersist(){
+        {
 
-        // mappings goes here
+            intensiveteam.external.Payment payment = new intensiveteam.external.Payment();
+            payment.setBookId(getId());
+            payment.setRoomId(getRoomId());
+            payment.setGuestId(getGuestId());
+            payment.setPrice(getPrice());
+            payment.setHostId(getHostId());
+            payment.setStartDate(getStartDate());
+            payment.setEndDate(getEndDate());
+            payment.setStatus("PayApproved");
+
+            // mappings goes here
             try {
-                 RoomApplication.applicationContext.getBean(intensiveteam.external.BookService.class)
-                    .Book(book);
+                 BookApplication.applicationContext.getBean(intensiveteam.external.PaymentService.class)
+                    .pay(payment);
             }catch(Exception e) {
                 throw new RuntimeException("결제서비스 호출 실패입니다.");
             }
+        }
 
-
-        RoomDeleted roomDeleted = new RoomDeleted();
-        BeanUtils.copyProperties(this, roomDeleted);
-        roomDeleted.publishAfterCommit();
-
-
-    }
+}
 ```
+
+- 동기식 호출로 연결되어 있는 예약(book)->결제(pay) 간의 연결 상황을 Kiali Graph로 확인한 결과 (siege 이용하여 book POST)
+
+![image](https://user-images.githubusercontent.com/43338817/119081473-fec11880-ba36-11eb-83fe-ef94952faef1.png)
 
 - 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, 결제 시스템이 장애가 나면 주문도 못받는다는 것을 확인:
 
 
 ```
-# 예약 서비스를 잠시 내려놓음
+# 결제 서비스를 잠시 내려놓음
 cd yaml
-$ kubectl delete -f book.yaml
+$ kubectl delete -f pay.yaml
 ```
-![캡처3](https://user-images.githubusercontent.com/81946702/120686868-67e76800-c4dc-11eb-8dc4-b3e7b539e185.png)
+![image](https://user-images.githubusercontent.com/45786659/119074505-252c8700-ba2a-11eb-89cd-8151b2b757e4.png)
+```
+# 예약처리 (siege 사용)
+http POST http://book:8080/books roomId=2 price=1500 startDate=20210505 endDate=20210508  #Fail
+http POST http://book:8080/books roomId=3 price=2000 startDate=20210505 endDate=20210508  #Fail
+```
+![image](https://user-images.githubusercontent.com/45786659/119074532-2f4e8580-ba2a-11eb-81dd-1b0b4c058b18.png)
 
 ```
-# 룸 삭제 처리 (siege 사용)
-
-http DELETE http://room:8080/rooms/1
-```
-![image](https://user-images.githubusercontent.com/81946702/120687073-9d8c5100-c4dc-11eb-8e14-11bf1ac38c9a.png)
-
-
-```
-# 예약 서비스 재기동
-$ kubectl apply -f book.yaml
+# 결제서비스 재기동
+$ kubectl apply -f pay.yaml
 ```
 ![image](https://user-images.githubusercontent.com/45786659/119074868-c4ea1500-ba2a-11eb-8ae4-7b4c04945b43.png)
 ```
