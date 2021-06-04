@@ -830,58 +830,14 @@ data:
   alarm.prefix: Hello
 ```
 * book.yaml (configmap 사용)
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: book
-  namespace: myhotel
-  labels:
-    app: book
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: book
-  template:
-    metadata:
-      labels:
-        app: book
-    spec:
-      containers:
-        - name: book
-          image: 740569282574.dkr.ecr.ap-northeast-1.amazonaws.com/book:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8080
-          env:
-            - name: api.url.payment
-              valueFrom:
-                configMapKeyRef:
-                  name: myhotel-config
-                  key: api.url.payment
-          ...
-```
-* kubectl describe pod/book-77998c895-ffbnn -n myhotel
-```
-Containers:
-  book:
-    Container ID:   docker://22dff5a6bd54a48951dc328db052ca494295dae7a431384b920714a5d6814b43
-    Image:          740569282574.dkr.ecr.ap-northeast-1.amazonaws.com/book:latest
-    Image ID:       docker-pullable://740569282574.dkr.ecr.ap-northeast-1.amazonaws.com/book@sha256:4918ad3d2dc44648151861f0d94457a02c963823df863a702f9bb05c7ac02261
-    Port:           8080/TCP
-    Host Port:      0/TCP
-    State:          Running
-      Started:      Fri, 21 May 2021 02:21:12 +0000
-    Ready:          True
-    Restart Count:  0
-    Liveness:       http-get http://:8080/actuator/health delay=120s timeout=2s period=5s #success=1 #failure=5
-    Readiness:      http-get http://:8080/actuator/health delay=10s timeout=2s period=5s #success=1 #failure=10
-    Environment:
-      api.url.payment:  <set to the key 'api.url.payment' of config map 'myhotel-config'>  Optional: false
-    Mounts:
-      /var/run/secrets/kubernetes.io/serviceaccount from default-token-m9sfp (ro)
-```
+
+![image](https://user-images.githubusercontent.com/81946702/120755081-7703ff80-c548-11eb-9e57-cac798859144.png)
+
+
+* kubectl describe pod/book-79ccbdd965-v9cds -n myhotel
+
+![image](https://user-images.githubusercontent.com/81946702/120755247-adda1580-c548-11eb-82f6-9a5ecb1d4a72.png)
+
 
 ## Self-healing (Liveness Probe)
 
