@@ -717,15 +717,13 @@ kubectl delete -f dr-pay.yaml
 앞서 CB 는 시스템을 안정되게 운영할 수 있게 해줬지만 사용자의 요청을 100% 받아들여주지 못했기 때문에 이에 대한 보완책으로 자동화된 확장 기능을 적용하고자 한다. 
 
 
-- 결제서비스에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 설정은 CPU 사용량이 3프로를 넘어서면 replica 를 10개까지 늘려준다:
-```
-$ kubectl autoscale deploy pay --min=1 --max=10 --cpu-percent=3
-```
+- 결제서비스에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 
+
 - 오토스케일 아웃 테스트를 위하여 book.yaml 파일 spec indent에 메모리 설정에 대한 문구를 추가한다:
 
-![image](https://user-images.githubusercontent.com/45786659/119083688-64af9f00-ba3b-11eb-9c58-7966c141afee.png)
+![image](https://user-images.githubusercontent.com/81946702/120749686-fc36e680-c53f-11eb-89e1-be456d1165d1.png)
 
-- CB 에서 했던 방식대로 워크로드를 3분 동안 걸어준다.
+-  워크로드를 3분 동안 걸어준다.
 ```
 siege -v -c255 -t180S -r10 --content-type "application/json" 'http://book:8080/books POST {"bookId":1, "roomId":1, "price":1000, "hostId":10, "guestId":10, "startDate":20200101, "endDate":20200103}'
 ```
@@ -733,7 +731,12 @@ siege -v -c255 -t180S -r10 --content-type "application/json" 'http://book:8080/b
 ```
 kubectl get deploy book -w -n myhotel
 ```
+
 - 어느정도 시간이 흐른 후 (약 30초) 스케일 아웃이 벌어지는 것을 확인할 수 있다:
+
+
+![image](https://user-images.githubusercontent.com/81946702/120750021-9008b280-c540-11eb-8ea8-cc10581e7a21.png)
+
 ```
 NAME   READY   UP-TO-DATE   AVAILABLE   AGE
 book   1/1     1            1           66s
