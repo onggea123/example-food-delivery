@@ -868,5 +868,3 @@ kubectl get -n myhotel all
 
 
 
-## CQRS
-
