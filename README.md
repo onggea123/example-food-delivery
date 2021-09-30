@@ -802,32 +802,24 @@ kubectl delete hpa pay -n myhotel
 
 
 
-==> Readiness 없을 경우 배포 시
+- Readiness 없을 경우 배포 시
 
 ```
 $ siege -c1 -t60S -v http://room:8080/rooms --delay=1S
 
-```
-
-```
+kubectl delete -f room.yaml
 kubectl apply -f room.yaml
 
 ```
 
-![image](https://user-images.githubusercontent.com/81946702/119099119-887ddf80-ba51-11eb-879c-e30d4819f17a.png)
-
-
-
-- seige 의 화면으로 넘어가서 Availability 가 100% 미만으로 떨어졌는지 확인
-
-![image](https://user-images.githubusercontent.com/81946702/119099287-b8c57e00-ba51-11eb-8a5a-991f7d3e6037.png)
+![image](https://user-images.githubusercontent.com/81946702/135467524-61c7fa3d-17ae-4c71-a123-137dfca5987e.png)
 
 
 ==> Readiness 추가 후 배포
 
 - 새버전으로의 배포 시작
 
-- room.yml 에 readiessProbe 설정
+- room.yml 에 ReadinessProbe 설정
 
 ```
 (room.yml)
@@ -842,15 +834,10 @@ kubectl apply -f room.yaml
 ```
 - room.yml 적용
 
-```
-kubectl apply -f room.yaml
+- 동일한 시나리오로 재배포 한 후 Availability 100% 확인
 
-```
-- 동일한 시나리오로 재배포 한 후 Availability 확인:
+![image](https://user-images.githubusercontent.com/81946702/135468138-3381a2de-9068-419f-b3bf-bca56a0c0ad0.png)
 
-![image](https://user-images.githubusercontent.com/81946702/119099653-16f26100-ba52-11eb-82da-f04219eabd38.png)
-
-Availability 100%인 것 확인
 
 
 ## Self-healing (Liveness Probe)
