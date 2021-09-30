@@ -789,8 +789,6 @@ data:
 ## 무정지 재배포
 
 - 먼저 무정지 재배포가 100% 되는 것인지 확인하기 위해서 Autoscaler 이나 CB 설정을 제거함
-
-
 - Autoscale 삭제
 
 ```
@@ -807,15 +805,12 @@ kubectl delete hpa pay -n myhotel
 ```
 $ siege -c1 -t60S -v http://room:8080/rooms --delay=1S
 
-kubectl delete -f room.yaml
 kubectl apply -f room.yaml
 
 ```
 
 ![image](https://user-images.githubusercontent.com/81946702/135467524-61c7fa3d-17ae-4c71-a123-137dfca5987e.png)
 
-
-==> Readiness 추가 후 배포
 
 - 새버전으로의 배포 시작
 
@@ -832,7 +827,6 @@ kubectl apply -f room.yaml
             periodSeconds: 5
             failureThreshold: 10
 ```
-- room.yml 적용
 
 - 동일한 시나리오로 재배포 한 후 Availability 100% 확인
 
