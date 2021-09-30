@@ -738,15 +738,20 @@ kubectl delete -f dr-pay.yaml
 
 - 결제서비스에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 
 
+```
 kubectl autoscale deploy pay -n mybnb --min=1 --max=3 --cpu-percent=15
+
+```
 
 -  워크로드를 걸어준다.
 ```
 siege -v -c100 -t180S -r10 --content-type "application/json" 'http://book:8080/books POST {"roomId":1, "name":"호텔", "price":1000, "address":"서울", "host":"Superman", "guest":"배트맨", "usedate":"20201230"}'
+
 ```
 - 오토스케일이 어떻게 되고 있는지 모니터링을 걸어둔다:
 ```
 kubectl get deploy pay -w -n myhotel
+
 ```
 
 - 어느정도 시간이 흐른 후 스케일 아웃이 벌어지는 것을 확인할 수 있다:
