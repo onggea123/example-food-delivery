@@ -682,6 +682,13 @@ kubectl label namespace myhotel istio-injection=enabled --overwrite
 ```
 $ siege -v -c255 -t180S -r10 --content-type "application/json" 'http://book:8080/books POST {"bookId":1, "roomId":1, "price":1000, "hostId":10, "guestId":10, "startDate":20200101, "endDate":20200103}'
 ```
+
+DR 적용 전 가용성 낮음 38%
+
+![image](https://user-images.githubusercontent.com/81946702/135406382-163d5f7f-867b-4afa-a9cd-02d9e3c48fc7.png)
+
+
+```
 - 서킷브레이킹을 위한 DestinationRule 적용
 ```
 cd myhotel/yaml
@@ -705,6 +712,12 @@ spec:
       consecutiveErrors: 2
       baseEjectionTime: 10s
       maxEjectionPercent: 100
+```
+적용 후 가용성 증가 64%
+
+![image](https://user-images.githubusercontent.com/81946702/135406868-ccc38feb-ba8b-49f4-bd82-7b363a5b6267.png)
+
+
 ```
 
 - 다시 부하 발생하여 DestinationRule 적용 제거하여 정상 처리 확인
