@@ -443,9 +443,6 @@ http http://book:8080/books/1
 ![image](https://user-images.githubusercontent.com/81946702/135412352-db9078db-46d2-4ffe-b773-da47499b4bbe.png)
 
 
-## 폴리글랏 퍼시스턴스
-## 폴리글랏 프로그래밍
-
 ## 동기식 호출과 Fallback 처리
 
 - 결제 서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 
