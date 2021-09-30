@@ -290,16 +290,18 @@ kubectl apply -f alarm.yaml
 kubectl apply -f siege.yaml
 ```
 
-현황
+- 현황
 
+```
 kubectl get ns
 kubectl describe ns myhotel
+```
 
 ![image](https://user-images.githubusercontent.com/81946702/135410957-d8b3abb8-4023-4168-bf7d-68f2b3aca9f3.png)
 
-
+```
 kubectl get all -n myhotel
-
+```
 ![image](https://user-images.githubusercontent.com/81946702/135411052-35232981-d157-44a9-a646-8ceebfd1cc4b.png)
 
 
@@ -429,10 +431,16 @@ public interface BookRepository extends PagingAndSortingRepository<Book, Long>{
 http POST http://room:8080/rooms price=1500
 
 # 예약처리
-http POST http://book:8080/books roomId=1 price=1000 startDate=20210505 endDate=20210508
+http POST http://book:8080/books roomId=1 price=1000 
+
+![image](https://user-images.githubusercontent.com/81946702/135412306-75adef80-322c-4d32-bcc4-8ccad8d0b885.png)
+
 
 # 예약 상태 확인
 http http://book:8080/books/1
+
+![image](https://user-images.githubusercontent.com/81946702/135412352-db9078db-46d2-4ffe-b773-da47499b4bbe.png)
+
 
 ```
 
