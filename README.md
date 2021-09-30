@@ -618,28 +618,22 @@ cd yaml
 kubectl delete -f alarm.yaml
 
 # 예약처리 (siege 사용)
-http POST http://book:8080/books roomId=2 price=1500 startDate=20210505 endDate=20210508	#Success
-http POST http://book:8080/books roomId=3 price=2000 startDate=20210505 endDate=20210508	#Success
-```
-```
+http POST http://book:8080/books roomId=3 price=2000 
+
 # 알림이력 확인 (siege 사용)
 http http://alarm:8080/notifications # 알림이력조회 불가
 ```
 
-![image](https://user-images.githubusercontent.com/81946702/120747605-4322dd00-c53c-11eb-8210-dfeaae3321b1.png)
+![image](https://user-images.githubusercontent.com/81946702/135414938-be1869f3-f57d-40fb-8c34-714d75f58df0.png)
 
 ```
 # 알림 서비스 기동
 kubectl apply -f alarm.yaml
-```
 
-![image](https://user-images.githubusercontent.com/45786659/119076341-5b1f3a80-ba2d-11eb-8a1f-5554c46233cf.png)
-
-```
 # 알림이력 확인 (siege 사용)
 http http://alarm:8080/notifications # 알림이력조회
 ```
-![image](https://user-images.githubusercontent.com/81946702/120747710-7a918980-c53c-11eb-84e5-f9c12350300d.png)
+![image](https://user-images.githubusercontent.com/81946702/135415182-c28e3b81-e20f-4ec2-8a9b-56bf4dd56e70.png)
 
 
 # Correlation 테스트
