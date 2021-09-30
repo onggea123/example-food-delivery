@@ -5,7 +5,7 @@
 
 # 예제 -  호텔예약서비스
 
-호텔 음식 예약 서비스 
+호텔 예약 서비스 
 
 - 체크포인트 : https://workflowy.com/s/assessment-check-po/T5YrzcMewfo4J6LW
 
@@ -126,8 +126,6 @@
 
 
 ## Event Storming 결과
-* MSAEz 로 모델링한 이벤트스토밍 결과:  http://www.msaez.io/#/storming/Bb0WFdkafROy3qiBkH258FKxOLW2/share/8efe31263c3025004aaa3da86965bf52
-
 
 ### 이벤트 도출
 ![image](https://user-images.githubusercontent.com/45786659/118963296-42694300-b9a1-11eb-9e67-05148a338fab.png)
