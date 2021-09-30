@@ -638,22 +638,24 @@ http http://alarm:8080/notifications # 알림이력조회
 
 # Correlation 테스트
 
-서비스를 이용해 만들어진 각 이벤트 건은 Correlation-key 연결을 통해 식별이 가능하다.
+- 서비스를 이용해 만들어진 각 이벤트 건은 Correlation-key 연결을 통해 식별이 가능하다.
 
 - Correlation-key로 식별하여 예약(book) 이벤트를 통해 생성된 결제(pay) 건에 대해 예약 취소 시 동일한 Correlation-key를 가지는 결제(pay) 이벤트 건 역시 삭제되는 모습을 확인한다:
 
-결제(pay) 이벤트 건 확인을 위하여 GET 수행
+- 결제(pay) 이벤트 건 확인을 위하여 GET 수행
 
-![image](https://user-images.githubusercontent.com/81946702/120747902-d52ae580-c53c-11eb-9abd-cb170c3f4025.png)
+![image](https://user-images.githubusercontent.com/81946702/135416365-058e8159-1a79-42e7-95c0-eecf5ab56ac9.png)
 
-위 결제(pay) 이벤트 건과 동일한 식별 키를 갖는 예약(book) 이벤트 건 DELETE 수행
+- 위 결제(pay) 이벤트 건과 동일한 식별 키를 갖는 예약(book) 이벤트 건 DELETE 수행
+- roomId 가 2 인 것이 삭제 대상
 
-![image](https://user-images.githubusercontent.com/81946702/120748235-69954800-c53d-11eb-9a0b-eedb99e51fad.png)
+![image](https://user-images.githubusercontent.com/81946702/135416802-6ecf95c8-411f-4a6b-89b3-85f777395e2f.png)
 
 
-결제(pay) 이벤트 건을 GET 명령어를 통해 조회한 결과 예약(book)에서 삭제한 17610번 키를 갖는 결제(pay) 이벤트 또한 삭제된 것을 확
+- 결제(pay) 이벤트 건을 GET 명령어를 통해 조회한 결과 예약(book)에서 삭제한 키를 갖는 결제(pay) 이벤트 또한 삭제된 것을 확인
+- roomId 2 인 pay 삭제됨
 
-![image](https://user-images.githubusercontent.com/81946702/120748028-086d7480-c53d-11eb-9b57-5d1cf252641a.png)
+![image](https://user-images.githubusercontent.com/81946702/135417052-3a47db68-b8c3-4dd6-8afc-ac138d170805.png)
 
 
 
