@@ -735,40 +735,25 @@ kubectl delete -f dr-pay.yaml
 
 - 결제서비스에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 
 
-- 오토스케일 아웃 테스트를 위하여 book.yaml 파일 spec indent에 메모리 설정에 대한 문구를 추가한다:
+- 오토스케일 아웃 테스트를 위하여 yaml 파일 spec indent에 메모리 설정에 대한 문구를 추가한다:
 
-![image](https://user-images.githubusercontent.com/81946702/120749686-fc36e680-c53f-11eb-89e1-be456d1165d1.png)
+![image](https://user-images.githubusercontent.com/81946702/135455523-ed18a842-b6b3-4342-b7da-b89801626a45.png)
 
--  워크로드를 3분 동안 걸어준다.
+-  워크로드를 걸어준다.
 ```
-siege -v -c255 -t180S -r10 --content-type "application/json" 'http://book:8080/books POST {"bookId":1, "roomId":1, "price":1000, "hostId":10, "guestId":10, "startDate":20200101, "endDate":20200103}'
+siege -v -c100 -t180S -r10 --content-type "application/json" 'http://book:8080/books POST {"roomId":1, "name":"호텔", "price":1000, "address":"서울", "host":"Superman", "guest":"배트맨", "usedate":"20201230"}'
 ```
 - 오토스케일이 어떻게 되고 있는지 모니터링을 걸어둔다:
 ```
-kubectl get deploy book -w -n myhotel
+kubectl get deploy pay -w -n myhotel
 ```
 
-- 어느정도 시간이 흐른 후 (약 30초) 스케일 아웃이 벌어지는 것을 확인할 수 있다:
-
-
-![image](https://user-images.githubusercontent.com/81946702/120750021-9008b280-c540-11eb-8ea8-cc10581e7a21.png)
-
-
+- 어느정도 시간이 흐른 후 스케일 아웃이 벌어지는 것을 확인할 수 있다:
 - siege 의 로그를 보아도 전체적인 성공률이 높아진 것을 확인 할 수 있다. 
-```
-Transactions:                   9090 hits
-Availability:                  99.98 %
-Elapsed time:                 143.38 secs
-Data transferred:               3.06 MB
-Response time:                  3.88 secs
-Transaction rate:              63.40 trans/sec
-Throughput:                     0.02 MB/sec
-Concurrency:                  245.75
-Successful transactions:        9090
-Failed transactions:               2
-Longest transaction:           34.12
-Shortest transaction:           0.01
-```
+
+![image](https://user-images.githubusercontent.com/81946702/135455757-34ad094f-9682-4a4b-805a-33ddfc3bb2ec.png)
+
+
 ## ConfigMap 사용
 
 시스템별로 또는 운영중에 동적으로 변경 가능성이 있는 설정들을 ConfigMap을 사용하여 관리합니다.
