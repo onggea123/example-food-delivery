@@ -732,12 +732,13 @@ kubectl delete -f dr-pay.yaml
 ## 오토스케일 아웃
 앞서 CB 는 시스템을 안정되게 운영할 수 있게 해줬지만 사용자의 요청을 100% 받아들여주지 못했기 때문에 이에 대한 보완책으로 자동화된 확장 기능을 적용하고자 한다. 
 
+- 오토스케일 아웃 테스트를 위하여 yaml 파일 메모리 설정에 대한 문구를 추가한다:
+
+![image](https://user-images.githubusercontent.com/81946702/135455523-ed18a842-b6b3-4342-b7da-b89801626a45.png)
 
 - 결제서비스에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 
 
-- 오토스케일 아웃 테스트를 위하여 yaml 파일 spec indent에 메모리 설정에 대한 문구를 추가한다:
-
-![image](https://user-images.githubusercontent.com/81946702/135455523-ed18a842-b6b3-4342-b7da-b89801626a45.png)
+kubectl autoscale deploy pay -n mybnb --min=1 --max=3 --cpu-percent=15
 
 -  워크로드를 걸어준다.
 ```
