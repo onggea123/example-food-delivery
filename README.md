@@ -433,16 +433,14 @@ http POST http://room:8080/rooms price=1500
 # 예약처리
 http POST http://book:8080/books roomId=1 price=1000 
 
-![image](https://user-images.githubusercontent.com/81946702/135412306-75adef80-322c-4d32-bcc4-8ccad8d0b885.png)
-
-
 # 예약 상태 확인
 http http://book:8080/books/1
 
-![image](https://user-images.githubusercontent.com/81946702/135412352-db9078db-46d2-4ffe-b773-da47499b4bbe.png)
-
 
 ```
+![image](https://user-images.githubusercontent.com/81946702/135412306-75adef80-322c-4d32-bcc4-8ccad8d0b885.png)
+
+![image](https://user-images.githubusercontent.com/81946702/135412352-db9078db-46d2-4ffe-b773-da47499b4bbe.png)
 
 
 ## 폴리글랏 퍼시스턴스
