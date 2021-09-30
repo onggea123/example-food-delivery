@@ -236,6 +236,8 @@ kubectl --namespace kube-system create sa tiller
 kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
 helm init --service-account tiller
 
+helm repo add incubator https://charts.helm.sh/incubator
+
 # Kafka 설치
 helm repo update
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -248,34 +250,33 @@ kubectl create namespace myhotel
 # myhotel image build & push
 cd book
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-book:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-book:latest
+docker build -t 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-book:latest .
+docker push 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-book:latest
 
 cd alarm
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-alarm:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-alarm:latest
+docker build -t 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-alarm:latest .
+docker push 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-alarm:latest
 
 cd gateway
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-gateway:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-gateway:latest
+docker build -t 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-gateway:latest .
+docker push 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-gateway:latest
 
 cd pay
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-pay:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-pay:latest
+docker build -t 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-pay:latest .
+docker push 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-pay:latest
 
 cd mypage
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-mypage:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-mypage:latest
+docker build -t 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-mypage:latest .
+docker push 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-mypage:latest
 
 cd room
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-room:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user02-room:latest
-
+docker build -t 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-room:latest .
+docker push 879772956301.dkr.ecr.ca-central-1.amazonaws.com/myhotel-room:latest
 
 # myhotel deploy
 cd myhotel/yaml
@@ -294,11 +295,12 @@ kubectl apply -f siege.yaml
 kubectl get ns
 kubectl describe ns myhotel
 
-![캡처1](https://user-images.githubusercontent.com/81946702/120670612-8f820480-c4cb-11eb-8161-dbc0e54474c7.PNG)
+![image](https://user-images.githubusercontent.com/81946702/135410957-d8b3abb8-4023-4168-bf7d-68f2b3aca9f3.png)
+
 
 kubectl get all -n myhotel
 
-![캡처2](https://user-images.githubusercontent.com/81946702/120670625-927cf500-c4cb-11eb-9d74-8efe7d583dc6.PNG)
+![image](https://user-images.githubusercontent.com/81946702/135411052-35232981-d157-44a9-a646-8ceebfd1cc4b.png)
 
 
 
