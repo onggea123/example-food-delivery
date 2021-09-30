@@ -505,26 +505,24 @@ cd yaml
 $ kubectl delete -f pay.yaml
 ```
 
-# 예약처리 (siege 사용)
+- 예약처리 (siege 사용)
 
 ```
 
-http POST http://book:8080/books roomId=2 price=1500 startDate=20210505 endDate=20210508  #Fail
-http POST http://book:8080/books roomId=3 price=2000 startDate=20210505 endDate=20210508  #Fail
+http POST http://book:8080/books roomId=2 price=1500 
 
 ```
-![image](https://user-images.githubusercontent.com/81946702/120747262-ae1fe400-c53b-11eb-8fa6-4e36d6050ab4.png)
+![image](https://user-images.githubusercontent.com/81946702/135413857-f5b36715-0e3e-4e7c-8b3b-1dff154829ea.png)
 
 ```
 # 결제서비스 재기동
 $ kubectl apply -f pay.yaml
 
 # 예약처리 (siege 사용)
-http POST http://book:8080/books roomId=2 price=1500 startDate=20210505 endDate=20210508  #Success
-http POST http://book:8080/books roomId=3 price=2000 startDate=20210505 endDate=20210508  #Success
+http POST http://book:8080/books roomId=2 price=1500 
 ```
 
-![image](https://user-images.githubusercontent.com/81946702/120747478-05be4f80-c53c-11eb-80b8-087c5eec5bfc.png)
+![image](https://user-images.githubusercontent.com/81946702/135414146-cd24e19c-dd1b-4f4c-bdf9-f8fc7c7ee2f5.png)
 
 
 - 또한 과도한 요청시에 서비스 장애가 도미노 처럼 벌어질 수 있다. (서킷브레이커, 폴백 처리는 운영단계에서 설명한다.)
