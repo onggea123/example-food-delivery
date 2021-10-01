@@ -162,7 +162,7 @@
 
 ![image](https://user-images.githubusercontent.com/45786659/118963450-6a58a680-b9a1-11eb-9ee3-0a37983b6081.png)
     
-### 호텔 바운디드 컨텍스트 내 PUB/SUB 고려하여 모델 간소화
+### 바운디드 컨텍스트 내 PUB/SUB 고려하여 모델 간소화
 
 ![image](https://user-images.githubusercontent.com/43338817/118920251-03bb9480-b971-11eb-8b0d-439315192a0d.png)
 
