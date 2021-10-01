@@ -779,9 +779,9 @@ data:
 ![image](https://user-images.githubusercontent.com/81946702/135548040-2c897671-2544-491b-b95f-62eb56deee76.png)
 
 
-* kubectl describe pod/book-79ccbdd965-v9cds -n myhotel
+* kubectl describe pod/book-6cc5676558-jtn6g -n myhotel
 
-![image](https://user-images.githubusercontent.com/81946702/120755247-adda1580-c548-11eb-82f6-9a5ecb1d4a72.png)
+![image](https://user-images.githubusercontent.com/81946702/135548426-22c4095f-5ce0-4d5a-a5f0-9cfc94e4da3b.png)
 
 
 
