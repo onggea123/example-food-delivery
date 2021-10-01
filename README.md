@@ -1,9 +1,6 @@
-<img src="https://user-images.githubusercontent.com/43338817/118908353-3eff9880-b95c-11eb-82f5-de2868e3ae4e.png" alt="" data-canonical-src="https://user-images.githubusercontent.com/43338817/118908353-3eff9880-b95c-11eb-82f5-de2868e3ae4e.png" width="250" height="250" /> <img src="https://user-images.githubusercontent.com/43338817/118910199-0c0ad400-b95f-11eb-8165-c469394fa8ab.png" alt="" data-canonical-src="https://user-images.githubusercontent.com/43338817/118910199-0c0ad400-b95f-11eb-8165-c469394fa8ab.png" width="250" height="250" />
+![image](https://user-images.githubusercontent.com/81946702/135553240-60e9391a-95a6-43ec-8b73-7e8203e591ed.png)
 
-![image](https://user-images.githubusercontent.com/81946702/120748611-0657e580-c53e-11eb-901c-7a3c781c001d.png)
-
-
-# 예제 -  스터디룸예약서비스
+# 스터디룸예약서비스
 
 스터디룸 예약 서비스 
 
