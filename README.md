@@ -838,7 +838,6 @@ kubectl apply -f room.yaml
 book.yml 에 Liveness Probe 옵션 설정
 
 ```
-(book/kubernetes/deployment.yml)
           ...
           
           livenessProbe:
@@ -849,6 +848,7 @@ book.yml 에 Liveness Probe 옵션 설정
             timeoutSeconds: 2
             periodSeconds: 5
             failureThreshold: 5
+            
 ```
 - book 서비스 과부하에 의해 Liveness probe Unhealthy Events 로 서비스 Kill 한 후 자동 Restart
 
