@@ -850,20 +850,11 @@ deployment.yml 에 Liveness Probe 옵션 설정
             periodSeconds: 5
             failureThreshold: 5
 ```
+- book 서비스 과부하에 의해 Liveness probe Unhealthy Events 로 서비스 Kill 한 후 자동 Restart
 
-book pod에 liveness가 적용된 부분 확인
+![image](https://user-images.githubusercontent.com/81946702/135550697-2657107f-9bd1-4e51-a8e9-17461524ff92.png)
 
-```
-kubectl describe pod/book-77998c895-ffbnn -n myhotel
-```
-![image](https://user-images.githubusercontent.com/45786659/119081667-6b3c1780-ba37-11eb-881c-197b181a4e43.png)
-
-
-book 서비스의 liveness가 발동되어 2회 retry 시도 한 부분 확인
-```
-kubectl get -n myhotel all
-```
-![image](https://user-images.githubusercontent.com/45786659/119081060-311e4600-ba36-11eb-8112-7fd52411f941.png)
+![image](https://user-images.githubusercontent.com/81946702/135550731-9f90de3b-6720-4d7c-a12f-78a88b052518.png)
 
 
 
