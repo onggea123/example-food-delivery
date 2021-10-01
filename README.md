@@ -835,7 +835,7 @@ kubectl apply -f room.yaml
 
 ## Self-healing (Liveness Probe)
 
-deployment.yml 에 Liveness Probe 옵션 설정
+book.yml 에 Liveness Probe 옵션 설정
 
 ```
 (book/kubernetes/deployment.yml)
