@@ -3,9 +3,9 @@
 ![image](https://user-images.githubusercontent.com/81946702/120748611-0657e580-c53e-11eb-901c-7a3c781c001d.png)
 
 
-# 예제 -  호텔예약서비스
+# 예제 -  스터디룸예약서비스
 
-호텔 예약 서비스 
+스터디룸 예약 서비스 
 
 - 체크포인트 : https://workflowy.com/s/assessment-check-po/T5YrzcMewfo4J6LW
 
