@@ -776,7 +776,7 @@ data:
 ```
 * book.yaml (configmap 사용)
 
-![image](https://user-images.githubusercontent.com/81946702/120755081-7703ff80-c548-11eb-9e57-cac798859144.png)
+![image](https://user-images.githubusercontent.com/81946702/135548040-2c897671-2544-491b-b95f-62eb56deee76.png)
 
 
 * kubectl describe pod/book-79ccbdd965-v9cds -n myhotel
