@@ -21,7 +21,7 @@
     - [폴리글랏 퍼시스턴스](#폴리글랏-퍼시스턴스)
     - [폴리글랏 프로그래밍](#폴리글랏-프로그래밍)
     - [동기식 호출 과 Fallback 처리](#동기식-호출-과-Fallback-처리)
-    - [비동기식 호출 과 Eventual Consistency](#비동기식-호출-과-Eventual-Consistency)
+   
   - [운영](#운영)
     - [CI/CD 설정](#cicd설정)
     - [동기식 호출 / 서킷 브레이킹 / 장애격리](#동기식-호출-서킷-브레이킹-장애격리)
@@ -29,8 +29,7 @@
     - [무정지 재배포](#무정지-재배포)
     - [ConfigMap 사용](#ConfigMap-사용)
     - [Self-healing (Liveness Probe)](#Self-healing-Liveness-Probe)
-    - [CQRS](#CQRS)
-  - [신규 개발 조직의 추가](#신규-개발-조직의-추가)
+
 
 # 서비스 시나리오
 
